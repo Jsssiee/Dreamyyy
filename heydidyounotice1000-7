@@ -1,0 +1,573 @@
+local GigaChads = game:GetService("Players")
+local SigmaSkibidi = GigaChads.LocalPlayer
+local RizzlerInputService = game:GetService("UserInputService")
+local ToiletTweenService = game:GetService("TweenService")
+local OhioService = game:GetService("RunService")
+
+-- Fix for issue 1: Parent GUI to CoreGui instead of PlayerGui
+local SkibidiScreen = Instance.new("ScreenGui")
+SkibidiScreen.Name = "UltraMegaSigmaRizzGUI"
+SkibidiScreen.Parent = game:GetService("CoreGui") -- Changed to CoreGui
+SkibidiScreen.ResetOnSpawn = false -- Prevent GUI from resetting on spawn
+
+local MainRizzFrame = Instance.new("Frame")
+MainRizzFrame.Name = "SuperDuperMainFrame"
+MainRizzFrame.Size = UDim2.new(0, 100, 0, 100)
+MainRizzFrame.Position = UDim2.new(0, -100, 0.5, -50)
+MainRizzFrame.BackgroundTransparency = 1
+MainRizzFrame.Parent = SkibidiScreen
+
+local GyattButton = Instance.new("ImageButton")
+GyattButton.Name = "OmegaGyattButton"
+GyattButton.Size = UDim2.new(0, 70, 0, 70)
+GyattButton.Position = UDim2.new(0, 15, 0, 15)
+GyattButton.BackgroundTransparency = 1
+GyattButton.Image = "rbxassetid://90468142488514"
+GyattButton.Parent = MainRizzFrame
+
+local FanumTaxCircle = Instance.new("ImageButton")
+FanumTaxCircle.Name = "FanumTaxEmergencyCircle"
+FanumTaxCircle.Size = UDim2.new(0, 30, 0, 30)
+FanumTaxCircle.Position = UDim2.new(0, 70, 0, 70)
+FanumTaxCircle.BackgroundTransparency = 1
+FanumTaxCircle.Image = "rbxassetid://14945760312"
+FanumTaxCircle.Parent = MainRizzFrame
+
+local SlideInRizz = ToiletTweenService:Create(
+    MainRizzFrame,
+    TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+    {Position = UDim2.new(0, 10, 0.5, -50)}
+)
+SlideInRizz:Play()
+
+local IsDraggingLikeCrazy = false
+local DragInputSignal
+local DragStartPosition
+local StartingPosition
+
+local function UpdateSigmaPosition(input)
+    local DeltaMovement = input.Position - DragStartPosition
+    MainRizzFrame.Position = UDim2.new(StartingPosition.X.Scale, StartingPosition.X.Offset + DeltaMovement.X, 
+                                      StartingPosition.Y.Scale, StartingPosition.Y.Offset + DeltaMovement.Y)
+end
+
+FanumTaxCircle.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        IsDraggingLikeCrazy = true
+        DragStartPosition = input.Position
+        StartingPosition = MainRizzFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                IsDraggingLikeCrazy = false
+            end
+        end)
+    end
+end)
+
+FanumTaxCircle.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        DragInputSignal = input
+    end
+end)
+
+RizzlerInputService.InputChanged:Connect(function(input)
+    if input == DragInputSignal and IsDraggingLikeCrazy then
+        UpdateSigmaPosition(input)
+    end
+end)
+
+GyattButton.MouseButton1Click:Connect(function()
+    UltimateSigmaRizzSetup()
+    
+    local ClickAnimation = ToiletTweenService:Create(
+        GyattButton,
+        TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Size = UDim2.new(0, 60, 0, 60)}
+    )
+    ClickAnimation:Play()
+    
+    wait(0.1)
+    
+    local LetHimCook = ToiletTweenService:Create(
+        GyattButton,
+        TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Size = UDim2.new(0, 70, 0, 70)}
+    )
+    LetHimCook:Play()
+end)
+
+local SkibidiToiletDetection = {
+    PEBBLE = "MainBody",
+    VEE = "LeftFoot",
+    SHELLY = "LeftArm",
+    SPROUT = "Sprout_rig_v002:Charm_Savory",
+    ASTRO = "StarBigGeo"
+}
+
+local GigaChadSkins = {
+    SHELLY = {
+        Meshes = {
+            Head = "rbxassetid://121416005691205",
+            LeftArm = "rbxassetid://127707731253213",
+            RightArm = "rbxassetid://99103628175723",
+            LeftLeg = "rbxassetid://111606816825119",
+            RightLeg = "rbxassetid://139966409154676",
+            Torso = "rbxassetid://137714616796761"
+        },
+        Textures = {
+            Head = "rbxassetid://74210666376037",
+            LeftArm = "rbxassetid://99182148252850",
+            RightArm = "rbxassetid://99182148252850",
+            LeftLeg = "rbxassetid://99182148252850",
+            RightLeg = "rbxassetid://99182148252850",
+            Torso = "rbxassetid://99182148252850"
+        }
+    },
+    VEE = {
+        Meshes = {
+            Head = "rbxassetid://76650784176953",
+            LeftFoot = "rbxassetid://130274306730425",
+            LeftHand = "rbxassetid://129913863486345",
+            LeftLowerArm = "rbxassetid://95405649341691",
+            LeftLowerLeg = "rbxassetid://106422750502938",
+            LeftUpperArm = "rbxassetid://103775953435928",
+            LeftUpperLeg = "rbxassetid://131057076944637",
+            RightFoot = "rbxassetid://86786330476104",
+            RightHand = "rbxassetid://122105117160470",
+            RightLowerArm = "rbxassetid://113817376015522",
+            RightLowerLeg = "rbxassetid://77532302545401",
+            RightUpperArm = "rbxassetid://125575697974050",
+            RightUpperLeg = "rbxassetid://92279600477743",
+            Tail = "rbxassetid://132948278128000",
+            Torso = "rbxassetid://123274887290083"
+        },
+        Textures = {
+            Head = "rbxassetid://72149025329181",
+            LeftFoot = "rbxassetid://72149025329181",
+            LeftHand = "rbxassetid://72149025329181",
+            LeftLowerArm = "rbxassetid://72149025329181",
+            LeftLowerLeg = "rbxassetid://72149025329181",
+            LeftUpperArm = "rbxassetid://72149025329181",
+            LeftUpperLeg = "rbxassetid://72149025329181",
+            RightFoot = "rbxassetid://72149025329181",
+            RightHand = "rbxassetid://72149025329181",
+            RightLowerArm = "rbxassetid://72149025329181",
+            RightLowerLeg = "rbxassetid://72149025329181",
+            RightUpperArm = "rbxassetid://72149025329181",
+            RightUpperLeg = "rbxassetid://72149025329181",
+            Tail = "rbxassetid://72149025329181",
+            Torso = "rbxassetid://72149025329181"
+        }
+    },
+    SPROUT = {
+        Meshes = {
+            ["Sprout_rig_v002:Charm_Savory"] = "rbxassetid://92446346663188",
+            ["Sprout_rig_v002:Head_geo"] = "rbxassetid://85463409898064",
+            ["Sprout_rig_v002:LeftArm"] = "rbxassetid://105063056834521",
+            ["Sprout_rig_v002:LeftLeg"] = "rbxassetid://132670118413307",
+            ["Sprout_rig_v002:RightArm"] = "rbxassetid://115349982090757",
+            ["Sprout_rig_v002:RightLeg"] = "rbxassetid://104928555677622",
+            ["Sprout_rig_v002:Torso_geo"] = "rbxassetid://104681823007856"
+        },
+        Textures = {
+            ["Sprout_rig_v002:Charm_Savory"] = "rbxassetid://91404592853749",
+            ["Sprout_rig_v002:Head_geo"] = "rbxassetid://116775966546494",
+            ["Sprout_rig_v002:LeftArm"] = "rbxassetid://80068173751442",
+            ["Sprout_rig_v002:LeftLeg"] = "rbxassetid://80068173751442",
+            ["Sprout_rig_v002:RightArm"] = "rbxassetid://80068173751442",
+            ["Sprout_rig_v002:RightLeg"] = "rbxassetid://80068173751442",
+            ["Sprout_rig_v002:Torso_geo"] = "rbxassetid://80068173751442"
+        }
+    },
+    PEBBLE = {
+        Meshes = {
+            Tail = "rbxassetid://86499619541694",
+            BackLeftLeg = "rbxassetid://121908447540527",
+            BackRightLeg = "rbxassetid://109937841382326",
+            FrontLeftLeg = "rbxassetid://88505736061090",
+            FrontRightLeg = "rbxassetid://130372069567602",
+            MainBody = "rbxassetid://113553274136591"
+        },
+        Textures = {
+            Tail = "rbxassetid://126369239528925",
+            BackLeftLeg = "rbxassetid://126369239528925",
+            FrontLeftLeg = "rbxassetid://126369239528925",
+            FrontRightLeg = "rbxassetid://126369239528925",
+            MainBody = "rbxassetid://94118610964552"
+        }
+    },
+    ASTRO = {
+        Meshes = {
+            HatGeo = "rbxassetid://98959780581729",
+            Head = "rbxassetid://119182785150129",
+            LeftLeg = "rbxassetid://71779743216687",
+            RightLeg = "rbxassetid://86051659952200",
+            StarBigGeo = "rbxassetid://96782212149960",
+            StarSmallGeo = "rbxassetid://75650663076348",
+            Torso = "rbxassetid://76010751348605"
+        },
+        Textures = {
+            HatGeo = "rbxassetid://72847008084956",
+            Head = "rbxassetid://80976639934716",
+            LeftLeg = "rbxassetid://72847008084956",
+            RightLeg = "rbxassetid://72847008084956",
+            Torso = "rbxassetid://72847008084956"
+        }
+    }
+}
+
+local function FindTheGyatt(character, partName)
+    for _, child in pairs(character:GetDescendants()) do
+        if child.Name == partName then
+            return child
+        end
+    end
+    return nil
+end
+
+local function WhatTheSigma(character)
+    for charType, partName in pairs(SkibidiToiletDetection) do
+        if FindTheGyatt(character, partName) then
+            return charType
+        end
+    end
+    return nil
+end
+
+-- Fix for issue 2: Improved Sprout head handling
+local function NoBlinkingOhio(character, characterType)
+    for _, child in pairs(character:GetDescendants()) do
+        if child.Name:find("^Cloned_") then
+            child:Destroy()
+        end
+    end
+    
+    if characterType == "SPROUT" then
+        -- Fix for Sprout head handling
+        local headGeo = FindTheGyatt(character, "Sprout_rig_v002:Head_geo")
+        if headGeo then
+            local headClone = headGeo:Clone()
+            headClone.Name = "Cloned_Sprout_rig_v002:Head_geo"  -- Fixed naming convention
+            headGeo:Destroy()
+            headClone.Parent = character
+            
+            -- Also handle the face parts for Sprout
+            for _, child in pairs(headClone:GetChildren()) do
+                if child:IsA("Decal") and child.Name == "face" then
+                    child:Destroy()
+                end
+            end
+            return headClone
+        end
+    elseif characterType == "PEBBLE" then
+        local mainBody = character:FindFirstChild("MainBody")
+        if mainBody then
+            local bodyClone = mainBody:Clone()
+            bodyClone.Name = "Cloned_MainBody"
+            mainBody:Destroy()
+            bodyClone.Parent = character
+            return bodyClone
+        end
+    else
+        local head = character:FindFirstChild("Head")
+        if head then
+            local headClone = head:Clone()
+            headClone.Name = "Cloned_Head"
+            head:Destroy()
+            headClone.Parent = character
+            return headClone
+        end
+    end
+    return nil
+end
+
+local function VisualRizz(part)
+    local meshPartChildren = {}
+    for _, child in ipairs(part:GetChildren()) do
+        if child:IsA("MeshPart") then
+            table.insert(meshPartChildren, child)
+        end
+    end
+    
+    if #meshPartChildren == 1 then
+        return meshPartChildren[1]
+    end
+    return part
+end
+
+local function FindTheGyattIncludingClones(character, partName)
+    local part = FindTheGyatt(character, partName)
+    if part then return part end
+    return FindTheGyatt(character, "Cloned_" .. partName)
+end
+
+local function ApplyTheRizz(character, characterType)
+    local config = GigaChadSkins[characterType]
+    if not config then return end
+    
+    for partName, meshId in pairs(config.Meshes) do
+        local targetPart = FindTheGyattIncludingClones(character, partName)
+        if targetPart then
+            local visualPart = VisualRizz(targetPart)
+            if visualPart:IsA("MeshPart") then
+                visualPart.MeshId = meshId
+            else
+                for _, child in ipairs(visualPart:GetChildren()) do
+                    if child:IsA("SpecialMesh") then
+                        child:Destroy()
+                    end
+                end
+                local mesh = Instance.new("SpecialMesh")
+                mesh.MeshId = meshId
+                mesh.Parent = visualPart
+            end
+        end
+    end
+    
+    for partName, textureId in pairs(config.Textures) do
+        local targetPart = FindTheGyattIncludingClones(character, partName)
+        if targetPart then
+            local visualPart = VisualRizz(targetPart)
+            if visualPart:IsA("MeshPart") then
+                visualPart.TextureID = textureId
+            else
+                for _, child in ipairs(visualPart:GetChildren()) do
+                    if child:IsA("Decal") then
+                        child:Destroy()
+                    end
+                end
+                local decal = Instance.new("Decal")
+                decal.Texture = textureId
+                decal.Face = "Front"
+                decal.Parent = visualPart
+                if partName == "Torso" or partName == "Head" then
+                    local faces = {"Front", "Back", "Left", "Right", "Top", "Bottom"}
+                    for _, face in ipairs(faces) do
+                        if face ~= "Front" then
+                            local additionalDecal = Instance.new("Decal")
+                            additionalDecal.Texture = textureId
+                            additionalDecal.Face = face
+                            additionalDecal.Parent = visualPart
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function VeeHeadRizz(head)
+    local leftFront = Instance.new("Attachment")
+    leftFront.Name = "LeftFront"
+    leftFront.Position = Vector3.new(-0.5, 0.5, 0.5)
+    leftFront.Parent = head
+
+    local leftBack = Instance.new("Attachment")
+    leftBack.Name = "LeftBack"
+    leftBack.Position = Vector3.new(-0.5, 0.5, -0.5)
+    leftBack.Parent = head
+
+    local rightFront = Instance.new("Attachment")
+    rightFront.Name = "RightFront"
+    rightFront.Position = Vector3.new(0.5, 0.5, 0.5)
+    rightFront.Parent = head
+
+    local rightBack = Instance.new("Attachment")
+    rightBack.Name = "RightBack"
+    rightBack.Position = Vector3.new(0.5, 0.5, -0.5)
+    rightBack.Parent = head
+
+    local leftTrail = Instance.new("Trail")
+    leftTrail.Attachment0 = leftFront
+    leftTrail.Attachment1 = leftBack
+    leftTrail.FaceCamera = false
+    leftTrail.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.new(0.207843, 0.721569, 1)),
+        ColorSequenceKeypoint.new(0.466321, Color3.new(1, 1, 1)),
+        ColorSequenceKeypoint.new(1, Color3.new(1, 0.917647, 0.278431))
+    }
+    leftTrail.MinLength = 0.1
+    leftTrail.WidthScale = NumberSequence.new{
+        NumberSequenceKeypoint.new(0, 1, 0),
+        NumberSequenceKeypoint.new(1, 1, 0)
+    }
+    leftTrail.MaxLength = 0
+    leftTrail.LightInfluence = 1
+    leftTrail.Transparency = NumberSequence.new{
+        NumberSequenceKeypoint.new(0, 0.5, 0),
+        NumberSequenceKeypoint.new(1, 1, 0)
+    }
+    leftTrail.TextureLength = 5
+    leftTrail.LightEmission = 1
+    leftTrail.Texture = "rbxassetid://123863150105609"
+    leftTrail.TextureMode = Enum.TextureMode.Static
+    leftTrail.Parent = head
+
+    local rightTrail = Instance.new("Trail")
+    rightTrail.Attachment0 = rightFront
+    rightTrail.Attachment1 = rightBack
+    rightTrail.FaceCamera = false
+    rightTrail.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.new(0.207843, 0.721569, 1)),
+        ColorSequenceKeypoint.new(0.466321, Color3.new(1, 1, 1)),
+        ColorSequenceKeypoint.new(1, Color3.new(1, 0.917647, 0.278431))
+    }
+    rightTrail.MinLength = 0.1
+    rightTrail.WidthScale = NumberSequence.new{
+        NumberSequenceKeypoint.new(0, 1, 0),
+        NumberSequenceKeypoint.new(1, 1, 0)
+    }
+    rightTrail.MaxLength = 0
+    rightTrail.LightInfluence = 1
+    rightTrail.Transparency = NumberSequence.new{
+        NumberSequenceKeypoint.new(0, 0.5, 0),
+        NumberSequenceKeypoint.new(1, 1, 0)
+    }
+    rightTrail.TextureLength = 5
+    rightTrail.LightEmission = 1
+    rightTrail.Texture = "rbxassetid://123863150105609"
+    rightTrail.TextureMode = Enum.TextureMode.Static
+    rightTrail.Parent = head
+end
+
+local function TrailRizz(part)
+    local attachment0 = Instance.new("Attachment")
+    attachment0.Name = "Attachment"
+    attachment0.Position = Vector3.new(-1.0184326171875, -3.918901205062866, -0.1595458984375)
+    attachment0.Parent = part
+
+    local attachment1 = Instance.new("Attachment")
+    attachment1.Name = "Attachment2"
+    attachment1.Position = Vector3.new(0.924560546875, -3.918901205062866, -0.1595458984375)
+    attachment1.Parent = part
+
+    local trail = Instance.new("Trail")
+    trail.Attachment0 = attachment0
+    trail.Attachment1 = attachment1
+    trail.FaceCamera = false
+    trail.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.new(0.207843, 0.721569, 1)),
+        ColorSequenceKeypoint.new(0.466321, Color3.new(1, 1, 1)),
+        ColorSequenceKeypoint.new(1, Color3.new(1, 0.917647, 0.278431))
+    }
+    trail.MinLength = 0.1
+    trail.WidthScale = NumberSequence.new{
+        NumberSequenceKeypoint.new(0, 1, 0),
+        NumberSequenceKeypoint.new(1, 1, 0)
+    }
+    trail.MaxLength = 0
+    trail.LightInfluence = 1
+    trail.Transparency = NumberSequence.new{
+        NumberSequenceKeypoint.new(0, 0.5, 0),
+        NumberSequenceKeypoint.new(1, 1, 0)
+    }
+    trail.TextureLength = 5
+    trail.LightEmission = 1
+    trail.Texture = "rbxassetid://123863150105609"
+    trail.TextureMode = Enum.TextureMode.Static
+    trail.Parent = part
+end
+
+local function ParticleRizz(part)
+    local particleEmitter = Instance.new("ParticleEmitter")
+    particleEmitter.Name = "ParticleEmitter"
+    particleEmitter.Acceleration = Vector3.new(0, 0, 0)
+    particleEmitter.Brightness = 1
+    particleEmitter.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)),
+        ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1))
+    })
+    particleEmitter.Drag = 0
+    particleEmitter.EmissionDirection = Enum.NormalId.Top
+    particleEmitter.Enabled = true
+    particleEmitter.Lifetime = NumberRange.new(0.24, 0.33)
+    particleEmitter.LightEmission = 1
+    particleEmitter.LightInfluence = 0
+    particleEmitter.LockedToPart = false
+    particleEmitter.Orientation = Enum.ParticleOrientation.FacingCamera
+    particleEmitter.Rate = 5
+    particleEmitter.RotSpeed = NumberRange.new(-200, 200)
+    particleEmitter.Rotation = NumberRange.new(0, 0)
+    particleEmitter.Size = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 0, 0),
+        NumberSequenceKeypoint.new(0.5009999871253967, 0.20000000298023224, 0),
+        NumberSequenceKeypoint.new(1, 0, 0)
+    })
+    particleEmitter.Speed = NumberRange.new(0, 0)
+    particleEmitter.SpreadAngle = Vector2.new(0, 0)
+    particleEmitter.Texture = "rbxassetid://78182182291126"
+    particleEmitter.TimeScale = 1
+    particleEmitter.Transparency = NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 0, 0),
+        NumberSequenceKeypoint.new(1, 0, 0)
+    })
+    particleEmitter.VelocityInheritance = 0
+    particleEmitter.ZOffset = 2
+    particleEmitter.Parent = part
+end
+
+local function UltraInstinctRizz(character, characterType)
+    if characterType == "VEE" then
+        local head = FindTheGyattIncludingClones(character, "Head")
+        if head then
+            VeeHeadRizz(head)
+        end
+    else
+        local trailPart, emitterPart
+        if characterType == "SHELLY" or characterType == "SPROUT" or characterType == "ASTRO" then
+            trailPart = FindTheGyattIncludingClones(character, "Torso")
+        elseif characterType == "PEBBLE" then
+            trailPart = FindTheGyattIncludingClones(character, "MainBody")
+        end
+        if characterType == "ASTRO" then
+            emitterPart = FindTheGyattIncludingClones(character, "Head")
+        else
+            emitterPart = trailPart
+        end
+        if trailPart then
+            TrailRizz(trailPart)
+        end
+        if emitterPart then
+            ParticleRizz(emitterPart)
+        end
+    end
+end
+
+local function CleanTheRizz(character)
+    for _, child in ipairs(character:GetDescendants()) do
+        if child:IsA("BillboardGui") and child.Name == "NameTag" then
+            child:Destroy()
+        end
+    end
+    local cape = character:FindFirstChild("cape")
+    if cape then
+        cape:Destroy()
+    end
+    local blinkingParts = character:FindFirstChild("BlinkingParts")
+    if blinkingParts then
+        blinkingParts:Destroy()
+    end
+end
+
+function UltimateSigmaRizzSetup()
+    local character = SigmaSkibidi.Character
+    if not character then
+        return
+    end
+    
+    if not character:FindFirstChild("Humanoid") then
+        character:WaitForChild("Humanoid")
+    end
+    
+    CleanTheRizz(character)
+    
+    local characterType = WhatTheSigma(character)
+    if not characterType then
+        return
+    end
+    
+    NoBlinkingOhio(character, characterType)
+    ApplyTheRizz(character, characterType)
+    UltraInstinctRizz(character, characterType)
+end
