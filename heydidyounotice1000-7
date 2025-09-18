@@ -4,7 +4,6 @@ local RizzlerInputService = game:GetService("UserInputService")
 local ToiletTweenService = game:GetService("TweenService")
 local OhioService = game:GetService("RunService")
 
--- Fix for issue 1: Parent GUI to CoreGui instead of PlayerGui
 local SkibidiScreen = Instance.new("ScreenGui")
 SkibidiScreen.Name = "UltraMegaSigmaRizzGUI"
 SkibidiScreen.Parent = game:GetService("CoreGui") -- Changed to CoreGui
@@ -235,7 +234,7 @@ local function WhatTheSigma(character)
     return nil
 end
 
--- Fix for issue 2: Improved Sprout head handling
+
 local function NoBlinkingOhio(character, characterType)
     for _, child in pairs(character:GetDescendants()) do
         if child.Name:find("^Cloned_") then
@@ -244,15 +243,15 @@ local function NoBlinkingOhio(character, characterType)
     end
     
     if characterType == "SPROUT" then
-        -- Fix for Sprout head handling
+
         local headGeo = FindTheGyatt(character, "Sprout_rig_v002:Head_geo")
         if headGeo then
             local headClone = headGeo:Clone()
-            headClone.Name = "Cloned_Sprout_rig_v002:Head_geo"  -- Fixed naming convention
+            headClone.Name = "Cloned_Sprout_rig_v002:Head_geo"  
             headGeo:Destroy()
             headClone.Parent = character
             
-            -- Also handle the face parts for Sprout
+        
             for _, child in pairs(headClone:GetChildren()) do
                 if child:IsA("Decal") and child.Name == "face" then
                     child:Destroy()
